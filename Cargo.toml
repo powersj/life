@@ -1,0 +1,14 @@
+[package]
+name = "life"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.74"
+
+[dependencies]
+egui = "0.26.1"
+eframe = "0.26.1"
+env_logger = { version = "0.11.1", default-features = false, features = [
+    "auto-color",
+    "humantime",
+] }
+rand = "0.8.4"
