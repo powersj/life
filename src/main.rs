@@ -22,7 +22,7 @@ struct GridApp {
 impl Default for GridApp {
     fn default() -> Self {
         let last_update = Instant::now();
-        let grid_size = 50;
+        let grid_size = 100;
         let cell_size = 9.0;
         let color_live: Color32 = Color32::BLACK;
         let color_dead: Color32 = Color32::WHITE;
@@ -99,7 +99,7 @@ impl GridApp {
 
 impl eframe::App for GridApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        ctx.set_pixels_per_point(1.5);
+        //ctx.set_pixels_per_point(1.5);
 
         let now = Instant::now();
         if now.duration_since(self.last_update) >= Duration::from_millis(200) {
@@ -184,7 +184,7 @@ fn main() -> Result<(), eframe::Error> {
     env_logger::init();
 
     let options = eframe::NativeOptions {
-        viewport: egui::ViewportBuilder::default().with_inner_size([1200.0, 1080.0]),
+        viewport: egui::ViewportBuilder::default().with_inner_size([1300.0, 1100.0]),
         default_theme: eframe::Theme::Light,
         ..Default::default()
     };
