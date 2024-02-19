@@ -1706,6 +1706,7 @@ dependencies = [
  "egui",
  "env_logger",
  "rand",
+ "rand_chacha",
 ]
 
 [[package]]
