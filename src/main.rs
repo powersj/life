@@ -1,6 +1,5 @@
 use eframe::egui;
-use egui::{Color32, Pos2, Rect, Vec2};
-use egui::color_picker::Alpha;
+use egui::{Color32, Pos2, Rect, TextStyle, Vec2};
 use std::time::{Duration, Instant};
 use rand::rngs::StdRng;
 use rand::SeedableRng;
@@ -17,6 +16,7 @@ struct GridApp {
     seed_picker: String,
     color_live: Color32,
     color_dead: Color32,
+    live_cell: f32,
 }
 
 impl Default for GridApp {
@@ -24,6 +24,7 @@ impl Default for GridApp {
         let last_update = Instant::now();
         let grid_size = 100;
         let cell_size = 9.0;
+        let live_cell = 10.0;
         let color_live: Color32 = Color32::BLACK;
         let color_dead: Color32 = Color32::WHITE;
 
@@ -37,7 +38,7 @@ impl Default for GridApp {
         let mut grid = vec![vec![0; grid_size]; grid_size];
         for row in 0..grid_size {
             for col in 0..grid_size {
-                if rng.gen_range(0..2) == 1 {
+                if rng.gen_range(0..100) < live_cell as i32 {
                     grid[row][col] = 1;
                 } else {
                     grid[row][col] = 0;
@@ -45,7 +46,7 @@ impl Default for GridApp {
             }
         }
 
-        Self { last_update, grid_size, cell_size, grid, seed, color_live, color_dead, seed_picker}
+        Self { last_update, grid_size, cell_size, live_cell, grid, seed, color_live, color_dead, seed_picker}
     }
 }
 
@@ -99,8 +100,6 @@ impl GridApp {
 
 impl eframe::App for GridApp {
     fn update(&mut self, ctx: &egui::Context, _frame: &mut eframe::Frame) {
-        //ctx.set_pixels_per_point(1.5);
-
         let now = Instant::now();
         if now.duration_since(self.last_update) >= Duration::from_millis(200) {
             self.update_grid();
@@ -111,49 +110,72 @@ impl eframe::App for GridApp {
             ui.vertical(|ui| {
                 ui.heading("Game of Life");
                 ui.separator();
-                ui.label("Settings");
-                ui.label("Live Color");
-                egui::color_picker::color_picker_color32(ui, &mut self.color_dead, Alpha::Opaque);
-                ui.label("Empty Color");
-                egui::color_picker::color_picker_color32(ui, &mut self.color_live, Alpha::Opaque);
-                ui.add(egui::Slider::new(&mut self.cell_size, 1.0..=10.0).text("Cell Size"));
+                ui.horizontal(|ui| {
+                    ui.label("Seed");
+                    ui.add(egui::TextEdit::singleline(&mut self.seed_picker).font(TextStyle::Monospace));
+                });
+
+                ui.horizontal(|ui| {
+                    if ui.button("Regenerate").clicked() {
+                        if let Ok(value) = self.seed_picker.parse() {
+                            self.seed = value;
+                        }
+                        self.seed_picker = self.seed.to_string();
+
+                        let mut rng = StdRng::seed_from_u64(self.seed);
+                        for row in 0..self.grid_size {
+                            for col in 0..self.grid_size {
+                                if rng.gen_range(0..100) < self.live_cell as i32 {
+                                    self.grid[row][col] = 1;
+                                } else {
+                                    self.grid[row][col] = 0;
+                                }
+                            }
+                        }
+                    }
+                    if ui.button("Randomize Seed").clicked() {
+                        let mut rng = rand::thread_rng();
+                        self.seed = rng.gen();
+                        self.seed_picker = self.seed.to_string();
+                        let mut rng = StdRng::seed_from_u64(self.seed);
+                        for row in 0..self.grid_size {
+                            for col in 0..self.grid_size {
+                                if rng.gen_range(0..100) < self.live_cell as i32 {
+                                    self.grid[row][col] = 1;
+                                } else {
+                                    self.grid[row][col] = 0;
+                                }
+                            }
+                        }
+                    }
+                });
+
                 ui.separator();
 
-                ui.add(egui::TextEdit::singleline(&mut self.seed_picker));
+                ui.horizontal(|ui| {
+                    ui.label("Rule Set");
+                });
 
-                ui.label("Seed");
-                if ui.button("Regenerate").clicked() {
-                    if let Ok(value) = self.seed_picker.parse() {
-                        self.seed = value;
-                    }
-                    self.seed_picker = self.seed.to_string();
+                ui.separator();
 
-                    let mut rng = StdRng::seed_from_u64(self.seed);
-                    for row in 0..self.grid_size {
-                        for col in 0..self.grid_size {
-                            if rng.gen_range(0..2) == 1 {
-                                self.grid[row][col] = 1;
-                            } else {
-                                self.grid[row][col] = 0;
-                            }
-                        }
-                    }
-                }
-                if ui.button("Random Seed").clicked() {
-                    let mut rng = rand::thread_rng();
-                    self.seed = rng.gen();
-                    self.seed_picker = self.seed.to_string();
-                    let mut rng = StdRng::seed_from_u64(self.seed);
-                    for row in 0..self.grid_size {
-                        for col in 0..self.grid_size {
-                            if rng.gen_range(0..3) == 1 {
-                                self.grid[row][col] = 1;
-                            } else {
-                                self.grid[row][col] = 0;
-                            }
-                        }
-                    }
-                }
+                ui.horizontal(|ui| {
+                    ui.label("Cell Size");
+                    ui.add(egui::Slider::new(&mut self.cell_size, 1.0..=10.0));
+                });
+                ui.horizontal(|ui| {
+                    ui.label("Live Cell %");
+                    ui.add(egui::Slider::new(&mut self.live_cell, 1.0..=100.0));
+                });
+                ui.horizontal(|ui| {
+                    ui.label("Live Cell Color");
+                    ui.color_edit_button_srgba(&mut self.color_live);
+                });
+                ui.horizontal(|ui| {
+                    ui.label("Empty Cell Color");
+                    ui.color_edit_button_srgba(&mut self.color_dead);
+                });
+
+                ui.separator();
             });
         });
         // get the width of the side panel
