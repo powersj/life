@@ -2,19 +2,15 @@ use crate::GRID_SIZE;
 
 use super::count;
 
-// https://conwaylife.com/wiki/Conway%27s_Game_of_Life
-// B3/S23
+// https://conwaylife.com/wiki/OCA:DryLife
+// B37/S23
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];
     for x in 0..GRID_SIZE {
         for y in 0..GRID_SIZE {
             let count = count::count_eight_neighbors(grid, x, y);
 
-            // Any live cell with fewer than two live neighbors dies, as if by under-population.
-            // Any live cell with two or three live neighbors lives on to the next generation.
-            // Any live cell with more than three live neighbors dies, as if by over-population.
-            // Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
-            if grid[x][y] == 0 && count == 3 {
+            if grid[x][y] == 0 && (count == 3 || count == 7){
                 new_grid[x][y] = 1;
             } else if grid[x][y] == 1 && (2..=3).contains(&count){
                 new_grid[x][y] = 1;

@@ -5,17 +5,35 @@ use rand::SeedableRng;
 use rand::Rng;
 
 mod rules {
+    pub mod assimilation;
     pub mod conway;
     pub mod count;
-    pub mod other;
+    pub mod dayandnight;
+    pub mod diamoeba;
+    pub mod dotlife;
+    pub mod drylife;
+    pub mod highlife;
+    pub mod honeylife;
+    pub mod invertamaze;
+    pub mod lifewithoutdeath;
+    pub mod vote;
 }
 
 const GRID_SIZE: usize = 100;
 
 #[derive(Debug, PartialEq, Clone, Copy)]
 enum Rules {
+    Assimilation,
     Conway,
-    Other,
+    DayAndNight,
+    Diamoeba,
+    DotLife,
+    DryLife,
+    Highlife,
+    HoneyLife,
+    InvertaMaze,
+    LifeWithoutDeath,
+    Vote,
 }
 
 
@@ -71,8 +89,17 @@ impl GridApp {
 
     fn update_grid(&mut self) {
         match self.rule_ui {
+            Rules::Assimilation => self.grid = rules::assimilation::update_grid(&self.grid),
             Rules::Conway => self.grid = rules::conway::update_grid(&self.grid),
-            Rules::Other => self.grid = rules::other::update_grid(&self.grid),
+            Rules::DayAndNight => self.grid = rules::dayandnight::update_grid(&self.grid),
+            Rules::Diamoeba => self.grid = rules::diamoeba::update_grid(&self.grid),
+            Rules::DryLife => self.grid = rules::drylife::update_grid(&self.grid),
+            Rules::DotLife => self.grid = rules::dotlife::update_grid(&self.grid),
+            Rules::Highlife => self.grid = rules::highlife::update_grid(&self.grid),
+            Rules::HoneyLife => self.grid = rules::honeylife::update_grid(&self.grid),
+            Rules::InvertaMaze => self.grid = rules::invertamaze::update_grid(&self.grid),
+            Rules::LifeWithoutDeath => self.grid = rules::lifewithoutdeath::update_grid(&self.grid),
+            Rules::Vote => self.grid = rules::vote::update_grid(&self.grid),
         }
     }
 }
@@ -93,7 +120,16 @@ impl eframe::App for GridApp {
                     .selected_text(format!("{:?}", self.rule_ui))
                     .show_ui(ui, |ui| {
                         ui.selectable_value(&mut self.rule_ui, Rules::Conway, "Conway");
-                        ui.selectable_value(&mut self.rule_ui, Rules::Other, "Other");
+                        ui.selectable_value(&mut self.rule_ui, Rules::Assimilation, "Assimilation");
+                        ui.selectable_value(&mut self.rule_ui, Rules::DayAndNight, "Day and Night");
+                        ui.selectable_value(&mut self.rule_ui, Rules::Diamoeba, "Diamoeba");
+                        ui.selectable_value(&mut self.rule_ui, Rules::DotLife, "Dot Life");
+                        ui.selectable_value(&mut self.rule_ui, Rules::DryLife, "Dry Life");
+                        ui.selectable_value(&mut self.rule_ui, Rules::Highlife, "High Life");
+                        ui.selectable_value(&mut self.rule_ui, Rules::HoneyLife, "Honey Life");
+                        ui.selectable_value(&mut self.rule_ui, Rules::InvertaMaze, "Inverta Maze");
+                        ui.selectable_value(&mut self.rule_ui, Rules::LifeWithoutDeath, "Life Without Death");
+                        ui.selectable_value(&mut self.rule_ui, Rules::Vote, "Vote");
                     }
                 );
                 ui.horizontal(|ui| {
