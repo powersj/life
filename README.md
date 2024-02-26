@@ -1,6 +1,8 @@
 # life
 
-*** Basic GUI to demo the Game of Life with a variety of rule sets ***
+* Basic GUI to demo the Game of Life with a variety of rule sets *
+
+![Screenshot](/img/screenshot.png "screenshot")
 
 ## Overview
 
