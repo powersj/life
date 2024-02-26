@@ -116,28 +116,40 @@ impl eframe::App for GridApp {
             ui.vertical(|ui| {
                 ui.heading("Game of Life");
                 ui.separator();
-                egui::ComboBox::from_label("Rule Set")
-                    .selected_text(format!("{:?}", self.rule_ui))
-                    .show_ui(ui, |ui| {
-                        ui.selectable_value(&mut self.rule_ui, Rules::Conway, "Conway");
-                        ui.selectable_value(&mut self.rule_ui, Rules::Assimilation, "Assimilation");
-                        ui.selectable_value(&mut self.rule_ui, Rules::DayAndNight, "Day and Night");
-                        ui.selectable_value(&mut self.rule_ui, Rules::Diamoeba, "Diamoeba");
-                        ui.selectable_value(&mut self.rule_ui, Rules::DotLife, "Dot Life");
-                        ui.selectable_value(&mut self.rule_ui, Rules::DryLife, "Dry Life");
-                        ui.selectable_value(&mut self.rule_ui, Rules::Highlife, "High Life");
-                        ui.selectable_value(&mut self.rule_ui, Rules::HoneyLife, "Honey Life");
-                        ui.selectable_value(&mut self.rule_ui, Rules::InvertaMaze, "Inverta Maze");
-                        ui.selectable_value(&mut self.rule_ui, Rules::LifeWithoutDeath, "Life Without Death");
-                        ui.selectable_value(&mut self.rule_ui, Rules::Vote, "Vote");
-                    }
-                );
+                ui.horizontal(|ui| {
+                    ui.label("Rule Set");
+                    egui::ComboBox::from_label("")
+                        .selected_text(format!("{:?}", self.rule_ui))
+                        .show_ui(ui, |ui| {
+                            ui.selectable_value(&mut self.rule_ui, Rules::Conway, "Conway");
+                            ui.selectable_value(&mut self.rule_ui, Rules::Assimilation, "Assimilation");
+                            ui.selectable_value(&mut self.rule_ui, Rules::DayAndNight, "Day and Night");
+                            ui.selectable_value(&mut self.rule_ui, Rules::Diamoeba, "Diamoeba");
+                            ui.selectable_value(&mut self.rule_ui, Rules::DotLife, "Dot Life");
+                            ui.selectable_value(&mut self.rule_ui, Rules::DryLife, "Dry Life");
+                            ui.selectable_value(&mut self.rule_ui, Rules::Highlife, "High Life");
+                            ui.selectable_value(&mut self.rule_ui, Rules::HoneyLife, "Honey Life");
+                            ui.selectable_value(&mut self.rule_ui, Rules::InvertaMaze, "Inverta Maze");
+                            ui.selectable_value(&mut self.rule_ui, Rules::LifeWithoutDeath, "Life Without Death");
+                            ui.selectable_value(&mut self.rule_ui, Rules::Vote, "Vote");
+                        }
+                    );
+                });
                 ui.horizontal(|ui| {
                     ui.label("Seed");
                     ui.add(egui::TextEdit::singleline(&mut self.seed_ui).font(egui::TextStyle::Monospace));
                 });
-
                 ui.horizontal(|ui| {
+                    ui.label("Alive Cell %");
+                    ui.add(egui::Slider::new(&mut self.percent_live_cell, 1.0..=100.0));
+                });
+                ui.horizontal(|ui| {
+                    if ui.button("Randomize Seed").clicked() {
+                        let mut rng = rand::thread_rng();
+                        self.seed = rng.gen();
+                        self.seed_ui = self.seed.to_string();
+                        self.generate_grid();
+                    }
                     if ui.button("Regenerate").clicked() {
                         if let Ok(value) = self.seed_ui.parse() {
                             self.seed = value;
@@ -145,23 +157,13 @@ impl eframe::App for GridApp {
                         self.seed_ui = self.seed.to_string();
                         self.generate_grid();
                     }
-                    if ui.button("Randomize Seed").clicked() {
-                        let mut rng = rand::thread_rng();
-                        self.seed = rng.gen();
-                        self.seed_ui = self.seed.to_string();
-                        self.generate_grid();
-                    }
                 });
 
                 ui.separator();
-
+                ui.label("UI Settings");
                 ui.horizontal(|ui| {
                     ui.label("Cell Size");
                     ui.add(egui::Slider::new(&mut self.cell_size, 1.0..=10.0));
-                });
-                ui.horizontal(|ui| {
-                    ui.label("Alive Cell %");
-                    ui.add(egui::Slider::new(&mut self.percent_live_cell, 1.0..=100.0));
                 });
                 ui.horizontal(|ui| {
                     ui.label("Alive Cell Color");
