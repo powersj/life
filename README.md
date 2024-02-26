@@ -41,24 +41,25 @@ A [rule string][] describes when cells should be born or stay alive, otherwise
 the cell dies. Rule sets are in the format `B{number list}/S{number list}`. For
 example, the classic Conway's Game of Life rule set is `B3/S23` meaning:
 
-* If an empty cell has 3 neighbors, then it is born
-* If a living sell has 2 or 3 neightbors, then it dies
+* If an dead cell has 3 neighbors, then it is born
+* If a living sell has 2 or 3 neightbors, then it survives
+* Otherwise a cell dies
 
 Includes are a number of different rules.
 
-| Name               | Rule String     | Description                          |
-|--------------------|-----------------|--------------------------------------|
-| Conways            | `B3/S23`        | The classic rule set |
-| Assimilation       | `B345/S4567`    | |
-| Day and night      | `B3678/S34678`  | |
-| Diamoeba           | `B35678/S5678`  | |
-| Dot life           | `B3/S023`       | |
-| Dry life           | `B37/S23`       | |
-| High life          | `B36/S23`       | |
-| Honey life         | `B38/S238`      | |
-| Invert a Maze      | `B028/S0124`    | |
-| Life without death | `B3/S012345678` | |
-| Vote               | `B5678/S45678`  | |
+| Name                   | Rule String     | Description                      |
+|------------------------|-----------------|----------------------------------|
+| [Conway][]             | `B3/S23`        | The classic rule set |
+| [Assimilation][]       | `B345/S4567`    | Diamond-shaped patterns |
+| [Day and night][]      | `B3678/S34678`  | Blots |
+| [Diamoeba][]           | `B35678/S5678`  | Small random soups |
+| [Dot life][]           | `B3/S023`       | Explosive and chaotic |
+| [Dry life][]           | `B37/S23`       | Similar to Conway |
+| [High life][]          | `B36/S23`       | Similar to Conway |
+| [Honey life][]         | `B38/S238`      | Honeycomb can be common |
+| [Invert a maze][]      | `B028/S0124`    | This flips between alive and dead |
+| [Life without death][] | `B3/S012345678` | Nothing dies |
+| [Vote][]               | `B5678/S45678`  | Blots of paint |
 
 A neighbor is any cell that touches another cell. This incudes all 8 cells
 around another cell. Cells on the edge do not wrap around to the other side.
@@ -67,6 +68,17 @@ neighborhood, meaning only the four cells in the north, south, east, and west
 direction.
 
 [rule string]: https://conwaylife.com/wiki/Rulestring
+[Conway]: https://conwaylife.com/wiki/Conway%27s_Game_of_Life
+[Assimilation]: https://conwaylife.com/wiki/OCA:Assimilation
+[Day and night]: https://conwaylife.com/wiki/OCA:Day_%26_Night
+[Diamoeba]: https://conwaylife.com/wiki/OCA:Diamoeba
+[Dot life]: https://conwaylife.com/wiki/OCA:DotLife
+[Dry life]: https://conwaylife.com/wiki/OCA:DryLife
+[High life]: https://conwaylife.com/wiki/OCA:HighLife
+[Honey life]: https://conwaylife.com/wiki/OCA:HoneyLife
+[Invert a maze]: https://conwaylife.com/wiki/OCA:Invertamaze
+[Life without death]: https://conwaylife.com/wiki/OCA:Life_without_death
+[Vote]: https://conwaylife.com/wiki/OCA:Vote
 
 ## TODO
 
