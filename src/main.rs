@@ -50,6 +50,9 @@ struct GridApp {
     seed_ui: String,
 
     rule_ui: Rules,
+    url: String,
+    description: String,
+    rule: String,
 }
 
 impl Default for GridApp {
@@ -69,6 +72,9 @@ impl Default for GridApp {
             seed_ui: initial_seed.to_string(),
 
             rule_ui: Rules::Conway,
+            rule: rules::conway::RULE.to_string(),
+            url: rules::conway::URL.to_string(),
+            description: rules::conway::DESCRIPTION.to_string(),
         }
     }
 }
@@ -89,17 +95,72 @@ impl GridApp {
 
     fn update_grid(&mut self) {
         match self.rule_ui {
-            Rules::Assimilation => self.grid = rules::assimilation::update_grid(&self.grid),
-            Rules::Conway => self.grid = rules::conway::update_grid(&self.grid),
-            Rules::DayAndNight => self.grid = rules::dayandnight::update_grid(&self.grid),
-            Rules::Diamoeba => self.grid = rules::diamoeba::update_grid(&self.grid),
-            Rules::DryLife => self.grid = rules::drylife::update_grid(&self.grid),
-            Rules::DotLife => self.grid = rules::dotlife::update_grid(&self.grid),
-            Rules::Highlife => self.grid = rules::highlife::update_grid(&self.grid),
-            Rules::HoneyLife => self.grid = rules::honeylife::update_grid(&self.grid),
-            Rules::InvertaMaze => self.grid = rules::invertamaze::update_grid(&self.grid),
-            Rules::LifeWithoutDeath => self.grid = rules::lifewithoutdeath::update_grid(&self.grid),
-            Rules::Vote => self.grid = rules::vote::update_grid(&self.grid),
+            Rules::Assimilation => {
+                self.grid = rules::assimilation::update_grid(&self.grid);
+                self.url = rules::assimilation::URL.to_string();
+                self.description = rules::assimilation::DESCRIPTION.to_string();
+                self.rule = rules::assimilation::RULE.to_string();
+            },
+            Rules::Conway => {
+                self.grid = rules::conway::update_grid(&self.grid);
+                self.url = rules::conway::URL.to_string();
+                self.description = rules::conway::DESCRIPTION.to_string();
+                self.rule = rules::conway::RULE.to_string();
+            },
+            Rules::DayAndNight => {
+                self.grid = rules::dayandnight::update_grid(&self.grid);
+                self.url = rules::dayandnight::URL.to_string();
+                self.description = rules::dayandnight::DESCRIPTION.to_string();
+                self.rule = rules::dayandnight::RULE.to_string();
+            },
+            Rules::Diamoeba => {
+                self.grid = rules::diamoeba::update_grid(&self.grid);
+                self.url = rules::diamoeba::URL.to_string();
+                self.description = rules::diamoeba::DESCRIPTION.to_string();
+                self.rule = rules::diamoeba::RULE.to_string();
+            },
+            Rules::DryLife => {
+                self.grid = rules::drylife::update_grid(&self.grid);
+                self.url = rules::drylife::URL.to_string();
+                self.description = rules::drylife::DESCRIPTION.to_string();
+                self.rule = rules::drylife::RULE.to_string();
+            },
+            Rules::DotLife => {
+                self.grid = rules::dotlife::update_grid(&self.grid);
+                self.url = rules::dotlife::URL.to_string();
+                self.description = rules::dotlife::DESCRIPTION.to_string();
+                self.rule = rules::dotlife::RULE.to_string();
+            },
+            Rules::Highlife => {
+                self.grid = rules::highlife::update_grid(&self.grid);
+                self.url = rules::highlife::URL.to_string();
+                self.description = rules::highlife::DESCRIPTION.to_string();
+                self.rule = rules::highlife::RULE.to_string();
+            },
+            Rules::HoneyLife => {
+                self.grid = rules::honeylife::update_grid(&self.grid);
+                self.url = rules::honeylife::URL.to_string();
+                self.description = rules::honeylife::DESCRIPTION.to_string();
+                self.rule = rules::honeylife::RULE.to_string();
+            },
+            Rules::InvertaMaze => {
+                self.grid = rules::invertamaze::update_grid(&self.grid);
+                self.url = rules::invertamaze::URL.to_string();
+                self.description = rules::invertamaze::DESCRIPTION.to_string();
+                self.rule = rules::invertamaze::RULE.to_string();
+            },
+            Rules::LifeWithoutDeath => {
+                self.grid = rules::lifewithoutdeath::update_grid(&self.grid);
+                self.url = rules::lifewithoutdeath::URL.to_string();
+                self.description = rules::lifewithoutdeath::DESCRIPTION.to_string();
+                self.rule = rules::lifewithoutdeath::RULE.to_string();
+            },
+            Rules::Vote => {
+                self.grid = rules::vote::update_grid(&self.grid);
+                self.url = rules::vote::URL.to_string();
+                self.description = rules::vote::DESCRIPTION.to_string();
+                self.rule = rules::vote::RULE.to_string();
+            },
         }
     }
 }
@@ -136,6 +197,10 @@ impl eframe::App for GridApp {
                     );
                 });
                 ui.horizontal(|ui| {
+                    ui.label("Rule");
+                    ui.label(self.rule.to_string());
+                });
+                ui.horizontal(|ui| {
                     ui.label("Seed");
                     ui.add(egui::TextEdit::singleline(&mut self.seed_ui).font(egui::TextStyle::Monospace));
                 });
@@ -158,6 +223,9 @@ impl eframe::App for GridApp {
                         self.generate_grid();
                     }
                 });
+                ui.separator();
+                ui.label(self.description.to_string());
+                ui.hyperlink_to("Rule Wiki Page", self.url.to_string());
 
                 ui.separator();
                 ui.label("UI Settings");
@@ -175,6 +243,7 @@ impl eframe::App for GridApp {
                 });
 
                 ui.separator();
+
             });
         });
         // get the width of the side panel

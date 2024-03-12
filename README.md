@@ -82,8 +82,5 @@ direction.
 
 ## TODO
 
-* Change rule sets to return a single 1 or 0 and evaluate a cell at a time
-  to reduce code duplication
-* Print rule string for each rule that is selected or a description of the rules
-* Introduce a custom rule option to let the user set their own rules
-* Can the user draw a custom grid
+* Let the user choose their own rule set?
+* Let the user draw a custom grid?
