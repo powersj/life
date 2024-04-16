@@ -4,7 +4,9 @@ use super::count;
 
 pub const RULE: &str = "B5678/S45678";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:Vote";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "Very limited rule set that does not allow any \
+starting cell to grow outside its initial boarders. It therefore stabilizes very \
+quickly as well.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

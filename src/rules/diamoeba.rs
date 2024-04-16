@@ -4,7 +4,9 @@ use super::count;
 
 pub const RULE: &str = "B35678/S5678";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:Diamoeba";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "This rule set tends to converge on larger shapes \
+that look like amoeba cells. Where the outside of the larger shapes have outside \
+legs that move and the inside stays alive.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

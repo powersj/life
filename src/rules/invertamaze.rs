@@ -4,7 +4,8 @@ use super::count;
 
 pub const RULE: &str = "B028/S0124";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:Invertamaze";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "A strobing rule set, which produces a maze like \
+structure.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

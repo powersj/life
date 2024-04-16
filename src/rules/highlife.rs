@@ -4,7 +4,10 @@ use super::count;
 
 pub const RULE: &str = "B36/S23";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:HighLife";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "A variant of Conway's Game of Life with one \
+additional rule: a dead cell comes to life if it is surrounded by 6 living \
+cells. Known for its replicator pattern. John Conway had even said that this \
+was the game he should have created originally.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

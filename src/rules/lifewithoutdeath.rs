@@ -4,7 +4,8 @@ use super::count;
 
 pub const RULE: &str = "B3/S012345678";
 pub const URL: &str = "https://en.wikipedia.org/wiki/Life_without_Death";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "No death, cells with three neighbors continues \
+to grow until there is no where else to grow.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

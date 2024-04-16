@@ -4,7 +4,9 @@ use super::count;
 
 pub const RULE: &str = "B3678/S34678";
 pub const URL: &str = "https://en.wikipedia.org/wiki/Day_and_Night_(cellular_automaton)";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "This is an example of a self-complementary rule \
+set. This means that if the black and white colors were reversed you would get \
+the same pattern.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

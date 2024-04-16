@@ -4,7 +4,8 @@ use super::count;
 
 pub const RULE: &str = "B345/S4567";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:Assimilation";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "With a high enough starting cell count this rule \
+causes the cells to grow and grow, or spawn outward";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];

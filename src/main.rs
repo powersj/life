@@ -223,9 +223,6 @@ impl eframe::App for GridApp {
                         self.generate_grid();
                     }
                 });
-                ui.separator();
-                ui.label(self.description.to_string());
-                ui.hyperlink_to("Rule Wiki Page", self.url.to_string());
 
                 ui.separator();
                 ui.label("UI Settings");
@@ -241,6 +238,10 @@ impl eframe::App for GridApp {
                     ui.label("Empty Cell Color");
                     ui.color_edit_button_srgba(&mut self.cell_color_empty);
                 });
+
+                ui.separator();
+                ui.hyperlink_to("Rule Wiki Page", self.url.to_string());
+                ui.label(self.description.to_string());
 
                 ui.separator();
 

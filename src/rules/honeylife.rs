@@ -4,7 +4,8 @@ use super::count;
 
 pub const RULE: &str = "B38/S238";
 pub const URL: &str = "https://conwaylife.com/wiki/OCA:HoneyLife";
-pub const DESCRIPTION: &str = "";
+pub const DESCRIPTION: &str = "Like life, can create honeycomb like \
+structures.";
 
 pub fn update_grid(grid: &[Vec<i32>]) -> Vec<Vec<i32>> {
     let mut new_grid = vec![vec![0; GRID_SIZE]; GRID_SIZE];
