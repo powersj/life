@@ -7,9 +7,9 @@
 ## Overview
 
 John Conway in the 1970s introduced the [Game of Life][]. The game, a cellular
-automaton, consistes of a grid, made up of cells generally with two states:
+automaton, consists of a grid, made up of cells generally with two states:
 alive or dead. At each turn or generation, the entire grid is evaluated
-cell-by-cell, based on a set of rules. The rules determine wheather cells, are
+cell-by-cell, based on a set of rules. The rules determine whether cells, are
 born, continue to live, or die. The rules are applied to create a new
 grid for the next generation of cells.
 
@@ -42,7 +42,7 @@ the cell dies. Rule sets are in the format `B{number list}/S{number list}`. For
 example, the classic Conway's Game of Life rule set is `B3/S23` meaning:
 
 * If an dead cell has 3 neighbors, then it is born
-* If a living sell has 2 or 3 neightbors, then it survives
+* If a living sell has 2 or 3 neighbors, then it survives
 * Otherwise a cell dies
 
 Includes are a number of different rules.
@@ -80,7 +80,3 @@ direction.
 [Life without death]: https://conwaylife.com/wiki/OCA:Life_without_death
 [Vote]: https://conwaylife.com/wiki/OCA:Vote
 
-## TODO
-
-* Let the user choose their own rule set?
-* Let the user draw a custom grid?
